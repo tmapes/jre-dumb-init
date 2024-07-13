@@ -1,0 +1,52 @@
+version: "1"
+
+metadata:
+  auto_cancel:
+    running: true
+
+steps:
+  - name: build image dry run
+    image: target/vela-kaniko:v0.17.0@sha256:56d8499175eb5a1b5342a86f706b87bff89878d2e5a5d835dcb9ffaa21836d19
+    parameters:
+      dry_run: true
+      repo: index.docker.io/tjmapes/jre-dumb-init
+      mirror: docker.mapes.info
+      tags: dry_run
+    ruleset:
+      unless:
+        branch: [main]
+
+  - name: build snapshot image
+    image: target/vela-kaniko:v0.17.0@sha256:56d8499175eb5a1b5342a86f706b87bff89878d2e5a5d835dcb9ffaa21836d19
+    secrets: [docker_username, docker_password]
+    parameters:
+      registry: https://index.docker.io/v1/
+      repo: index.docker.io/tjmapes/jre-dumb-init
+      mirror: docker.mapes.info
+      tags:
+        - "b${VELA_BUILD_NUMBER}-${VELA_BUILD_COMMIT:0:8}"
+    ruleset:
+      event: push
+      branch: main
+
+  - name: build release image
+    image: target/vela-kaniko:v0.17.0@sha256:56d8499175eb5a1b5342a86f706b87bff89878d2e5a5d835dcb9ffaa21836d19
+    secrets: [docker_username, docker_password]
+    parameters:
+      registry: https://index.docker.io/v1/
+      repo: index.docker.io/tjmapes/jre-dumb-init
+      mirror: docker.mapes.info
+      tags:
+        - "${VELA_BUILD_TAG:##v}"
+    ruleset:
+      event: tag
+
+secrets:
+  - name: docker_username
+    type: org
+    key: tmapes/docker_username
+    engine: native
+  - name: docker_password
+    type: org
+    key: tmapes/docker_password
+    engine: native
