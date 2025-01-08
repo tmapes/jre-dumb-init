@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21.0.5_11-jre-alpine@sha256:41502ff7105c996a588c68647da859759b5fc457bca6f4bf3edbc59e3b75423c
+FROM eclipse-temurin:21.0.5_11-jre-alpine@sha256:94827466ed00df9dbd09b29f4bd0ff37c55cb4fb26ddcc8b0af88bd2f5d1d218
 
 ENV TZ="UTC"
 
