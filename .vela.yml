@@ -6,7 +6,7 @@ metadata:
 
 steps:
   - name: build image dry run
-    image: target/vela-kaniko:v0.19.2@sha256:eb78a4b97f45c3f1b32b25c813e4414375bc47d7e669ffd430c0fcbc93844fd7
+    image: target/vela-kaniko:v0.21.0@sha256:f6aef671ee8166e8b1c432a0121b0efbe4b6ca7f06d75dc41878af2896692e98
     parameters:
       dry_run: true
       repo: index.docker.io/tjmapes/jre-dumb-init
@@ -17,7 +17,7 @@ steps:
         branch: [main]
 
   - name: build snapshot image
-    image: target/vela-kaniko:v0.19.2@sha256:eb78a4b97f45c3f1b32b25c813e4414375bc47d7e669ffd430c0fcbc93844fd7
+    image: target/vela-kaniko:v0.21.0@sha256:f6aef671ee8166e8b1c432a0121b0efbe4b6ca7f06d75dc41878af2896692e98
     secrets: [docker_username, docker_password]
     parameters:
       registry: https://index.docker.io/v1/
@@ -30,7 +30,7 @@ steps:
       branch: main
 
   - name: build release image
-    image: target/vela-kaniko:v0.19.2@sha256:eb78a4b97f45c3f1b32b25c813e4414375bc47d7e669ffd430c0fcbc93844fd7
+    image: target/vela-kaniko:v0.21.0@sha256:f6aef671ee8166e8b1c432a0121b0efbe4b6ca7f06d75dc41878af2896692e98
     secrets: [docker_username, docker_password]
     parameters:
       registry: https://index.docker.io/v1/
